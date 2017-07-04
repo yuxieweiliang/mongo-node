@@ -4,11 +4,15 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "bootstrap": "^3.3.7",
+    "body-parser": "^1.17.2",
     "express": "^4.15.3",
-    "mongoose": "^4.11.0"
+    "jQuery": "^1.7.4",
+    "moment": "^2.18.1",
+    "mongoose": "^4.11.0",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
+    "bootstrap": "^3.3.7",
     "jade": "^1.11.0",
     "nodemon": "^1.11.0"
   },
