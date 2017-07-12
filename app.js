@@ -19,43 +19,15 @@ var dir = path.join(__dirname, './views/pages/');
 app.set('views', dir);
 app.set('view engine', 'jade');// 设置模板引擎
 
-app.use(bodyParser.urlencoded({ extended: false }));
+// express 默认使用解析http请求的中间件之一
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.static(path.join(__dirname, 'bower_components')));
-console.log(path.join(__dirname, 'bower_components'));
 
-data = {
-  user : {u_name, u_age, },
-  book: {b_name, b_size, b_zan, b_tuijian},
-  tool: {t_name, t_used, t_download}
-};
-
-
-/*
-
-
- //  利用这个可以添加数据
-var _movie = new Movie({
-  title: '异形：契约e',
-  director: '雷德利·斯科特',
-  country: '美国',
-  year: 2017,
-  poster: 'https://img3.doubanio.com/view/movie_poster_cover/ipst/public/p2167448161.webp',
-  language: '英语',
-  flash: 'http://119.188.38.131/youku/65743530DBB4C838FBA166544F/0300080100585FB87B799839BBD120136343F3-AD4F-8451-FC2A-A9554D727689.mp4?sid=049846040186412f9e92c&ctype=12&ccode=0401&duration=133&expire=18000&psid=599c21659cf2ed62339a7ba955d34987&ups_client_netip=114.240.103.157&ups_ts=1498460401&ups_userid=&utid=LT%2FBEcSPnjsCAXt3LLqrfLyH&vid=XMTg4NTUxNjQ5Ng%3D%3D&vkey=A57113a190f13ec64fa327c44ec8d116e&nk=411351972806_24974340174&ns=0_22165960&special=true',
-  summary:'“科幻之父”雷德利-斯科特将为他所开创的《异形》系列带来新篇章。《异形：契约》的故事发生在《普罗米修斯》10年后，一群新的宇航员乘坐着“契约号”飞船前往遥远的星系寻找殖民地，他们来到一处看似天堂般的星球，实则是黑暗、危险的地狱，在那里他们见到了“普罗米修斯”号唯一的幸存者——由迈克尔·法斯宾德饰演的生化人大卫，一场毁灭性的巨大灾难即将到来。'
-});
-
-_movie.save(function(error, movie) {
-  if(error) {
-    console.log(error)
-  }
-  res.redirect('/movie/' + movie.id)
-})*/
 
 // 首页 分割线
-app.get('/', (req, res)=>{
+app.get('/', (req, res) => {
 
   Movie.fetch(function(error, movie) {
     if(error) {
@@ -73,7 +45,7 @@ app.get('/', (req, res)=>{
 });
 
 // 详情页
-app.get('/movie/:id', (req, res)=>{
+app.get('/movie/:id', (req, res) => {
   const id = req.params.id;
   Movie.findById(id, function(error, movie) {
     if(error) {
@@ -110,7 +82,7 @@ app.post('admin/movie/new', function() {
       }
       _movie = _.extend(movie, movieObj);
       _movie = Movie.save(function(error, movie) {
-        if(error) {
+        if(error) { // 分卷  拖动
           console.log(error)
         }
         res.redirect('/movie/' + movie.id)
@@ -142,13 +114,12 @@ app.get('/admin/movie/update', (req, res) => {
         title: '后台更新',
         movie
       })
-
     })
   }
 });
 
 // 后台录入页
-app.get('/admin/movie', (req, res)=>{
+app.get('/admin/movie', (req, res)=> {
   res.render('admin', {
     title: '电影录入',
     movie: {
