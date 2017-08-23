@@ -4,10 +4,7 @@ var bodyParser = require('body-parser');
 var port = process.env.PORT || 3040;
 var app = express();
 
-var mongoose = require('mongoose');
 var Movie = require('./moddel/movie');
-mongoose.connect('mongodb://127.0.0.1:27017/test');
-
 var _ = require('underscore');
 
 // 为本地变量赋值
@@ -25,9 +22,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.static(path.join(__dirname, 'bower_components')));
 
-
 // 首页 分割线
 app.get('/', (req, res) => {
+  console.log('fffffff');
 
   Movie.fetch(function(error, movie) {
     if(error) {
@@ -74,7 +71,7 @@ app.get('/movie/:id', (req, res) => {
 app.post('admin/movie/new', function() {
   var id = req.body.movie.id;
   var movieObj = req.body.movie;
-  var _movie
+  var _movie;
   if(id != 'undefined') {
     Movie.findById(id, function(error, movie) {
       if(error) {
@@ -105,6 +102,7 @@ app.post('admin/movie/new', function() {
     })
   }
 });
+
 // admin update
 app.get('/admin/movie/update', (req, res) => {
   id = req.params.id;

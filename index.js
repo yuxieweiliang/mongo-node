@@ -176,6 +176,7 @@ TestSchema.find({},null,{skip:4},function(err,docs){
 // 键代表要排序的键名，值代表排序的方向，1是升序，-1是降序。
 TestSchema.find({},null,{sort:{age:-1}},function(err,docs){
 //查询所有数据，并按照age降序顺序返回数据docs
+  console.log(docs);
 });
 TestSchema.find({},
   {name: 1, age: 1, _id: 0 },
