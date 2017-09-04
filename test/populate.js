@@ -12,7 +12,7 @@ let UserSchema = new Schema({
 let user = model('User', UserSchema);
 
 let BookSchema = new Schema({
-  name: STring,
+  name: String,
   picId: {type: Schema.Types.ObjectId, ref: 'pic'}
 
 });
