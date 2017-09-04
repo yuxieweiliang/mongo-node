@@ -17,4 +17,4 @@ mong
 bower_components
 .idea
 *.docx
-*.text
+app/
