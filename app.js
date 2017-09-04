@@ -5,7 +5,6 @@ var port = process.env.PORT || 3040;
 var app = express();
 
 var Movie = require('./moddel/movie');
-var _ = require('underscore');
 
 // 为本地变量赋值
 app.locals.moment = require('moment');
@@ -15,6 +14,7 @@ var dir = path.join(__dirname, './views/pages/');
 // 使用html模板，需增加  app.engine('html', require('ejs').__express);使用EJS或jade模板，不用配置该项。
 app.set('views', dir);
 app.set('view engine', 'jade');// 设置模板引擎
+
 
 // express 默认使用解析http请求的中间件之一
 app.use(bodyParser.json());
@@ -30,6 +30,10 @@ app.get('/', (req, res) => {
     if(error) {
       console.log(error)
     }
+    res.render('index', {
+      title: '电影网站首页',
+      movies: movie
+    })
     if( movie.length > 1) {
       res.render('index', {
         title: '电影网站首页',

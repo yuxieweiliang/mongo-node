@@ -1,43 +1,84 @@
-import mongoose, { Schema } from 'mongoose';
-let db = mongoose.connect('mongodb://127.0.0.1:27017/populate');
-let { model } = db;
+var mongoose = require('mongoose');
+var Schema   = mongoose.Schema;
 
-let UserSchema = new Schema({
-  bookId: {type: Schema.Types.ObjectId, ref: 'book'},
+
+
+
+var SchoolSchema = new Schema({
+  name  : { type: String, unique: true },
+  posts : [{ type: Schema.Types.ObjectId, ref: 'Classes' }]
+});
+var school = mongoose.model('School', SchoolSchema);
+
+var ClassSchema = new Schema({
+  classes : [{ type: Schema.Types.ObjectId, ref: 'Classes' }],
+  title    : String,
+  content  : String
+});
+var classes = mongoose.model('Classes', ClassSchema);
+
+
+var studesSchema = new Schema({
   name: String,
-  introduce: String,
-  age: Number,
-  Id: Schema.Types.ObjectId
+  classes: { type: Schema.Types.ObjectId, ref: "Classes" },
+  school: { type: Schema.Types.ObjectId, ref: "School" }
 });
-let user = model('User', UserSchema);
+var studes = mongoose.model('Class', studesSchema);
 
-let BookSchema = new Schema({
-  name: String,
-  picId: {type: Schema.Types.ObjectId, ref: 'pic'}
-
-});
-let book = model('Book', BookSchema);
-
-let PicSchema = new Schema({
-  url: String,
-  name: String,
-  size: Object
-});
-let pic = model('Pic', PicSchema);
-
-user.create([{name: '云若风生', age: 30},{name: '雨歇微凉', age: 20}], function(err, docs) {
-  book.create({name: '冰与火之歌'}, function(err, docs){
-    pic.create({url: 'fdsa/ff/aa', name: 'MM', size: {width: 100, height: 100}}, function(err, docs) {
-      console.log('pic', docs)
-    })
-  })
+mongoose.connect('mongodb://localhost/population-test', function (err){
+  if (err) throw err;
+  //createData();
 });
 
-user.find({}, function(err, docs) {
+function createData() {
+
+  var userIds    = [mongoose.Types.ObjectId(), mongoose.Types.ObjectId(), mongoose.Types.ObjectId()];
+  var postIds    = [mongoose.Types.ObjectId(), mongoose.Types.ObjectId(), mongoose.Types.ObjectId()];
+  var commentIds = [mongoose.Types.ObjectId(), mongoose.Types.ObjectId(), mongoose.Types.ObjectId()];
+
+  var users    = [];
+  var posts    = [];
+  var comments = [];
+
+  userIds.map((item) => users.push({
+    _id   : item,
+    name  : 'aikin',
+    posts : [item]
+  }));
+
+  postIds.map((item) => posts.push({
+    _id   : item,
+    name  : 'aikin',
+    posts : [item]
+  }));
+
+  commentIds.map((item) => comments.push({
+    _id   : item,
+    name  : 'aikin',
+    posts : [item]
+  }));
+
+  school.create(users, function(err, docs) {
+    classes.create(posts, function(err, docs) {
+      studes.create(comments, function(err, docs) {
+      });
+    });
+  });
+}
+
+/*Post.find({}, function(err, docs) {
   console.log(docs)
-});
+})*/
+studes.findOne({name: 'aikin'})
+    .exec(function(err, doc) {
 
-user.find().populate('bookId', '_id name').exec(function(err, docs) {
-  console.log(docs)
-});
+      var opts = [{
+        path   : 'posts',
+        select : 'title'
+      }];
+      console.log(doc)
 
+      /*doc.populate(opts, function(err, populatedDoc) {
+        console.log(populatedDoc);  // post-by-aikin
+      });*/
+    });
