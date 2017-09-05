@@ -3,17 +3,31 @@ let db = mongoose.connect('mongodb://127.0.0.1:27017/populate');
 let { model } = db;
 
 let UserSchema = new Schema({
-  bookId: {type: Schema.Types.ObjectId, ref: 'book'},
   name: String,
   introduce: String,
   age: Number,
-  Id: Schema.Types.ObjectId
+  id: Schema.Types.ObjectId,
+  phone: String,
+  address: String,
+  job: String,
+  time: { type: Number, default: Date.now },
+  include: {
+    book: [{type: Schema.Types.ObjectId, ref: 'book'}],
+  },
 });
 let user = model('User', UserSchema);
 
 let BookSchema = new Schema({
+  id: Schema.Types.ObjectId,
   name: String,
-  picId: {type: Schema.Types.ObjectId, ref: 'pic'}
+  include: {
+    answer: {
+      user: String,
+      text: String,
+      time: { type: Number, default: Date.now },
+    },
+    pic: {type: Schema.Types.ObjectId, ref: 'pic'}
+  },
 
 });
 let book = model('Book', BookSchema);
@@ -29,7 +43,7 @@ let id = [mongoose.Types.ObjectId, mongoose.Types.ObjectId];
 user.create([
   {name: '云若风生', age: 30, bookId:id[0]},
   {name: '雨歇微凉', age: 20, bookId:id[1]}
-  ], function(err, docs) {
+], function(err, docs) {
   book.create({name: '冰与火之歌', id: id[0]}, function(err, docs){
     pic.create({url: 'fdsa/ff/aa', name: 'MM', size: {width: 100, height: 100}}, function(err, docs) {
       console.log('pic', docs)
