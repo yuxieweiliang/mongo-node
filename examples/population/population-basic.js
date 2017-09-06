@@ -57,13 +57,15 @@ function createData() {
     function(err, nintendo64) {
       if (err) return done(err);
 
+
       Game.create({
         name: 'Legend of Zelda: Ocarina of Time',
         developer: 'Nintendo',
         released: new Date('November 21, 1998'),
-        consoles: [nintendo64]
+        //consoles: [nintendo64],  // 这里使用_id 和使用整个是一样的效果
+        consoles: [nintendo64._id]
       },
-      function(err) {
+      function(err, dic) {
         if (err) return done(err);
         example();
       });
@@ -81,12 +83,13 @@ function example() {
   .populate('consoles')
   .exec(function(err, ocinara) {
     if (err) return done(err);
+    console.log(ocinara);
 
     console.log(
-      '"%s" was released for the %s on %s',
+      '"%s"  was released for the %s on %s',
       ocinara.name,
       ocinara.consoles[0].name,
-      ocinara.released.toLocaleDateString()
+      ocinara.consoles[0].released.toLocaleDateString()
     );
 
     done();

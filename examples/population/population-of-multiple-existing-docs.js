@@ -101,6 +101,7 @@ function example() {
       if (err) return done(err);
 
       games.forEach(function(game) {
+        console.log(game.consoles);
         console.log(
           '"%s" was released for the %s on %s',
           game.name,

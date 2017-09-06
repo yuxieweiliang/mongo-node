@@ -17,7 +17,7 @@ mongoose.connection.on('error', function() {
 /**
  * Schemas
  */
-
+//    用户
 var user = new Schema({
   name: String,
   friends: [{
@@ -27,6 +27,7 @@ var user = new Schema({
 });
 var User = mongoose.model('User', user);
 
+//    博文
 var blogpost = Schema({
   title: String,
   tags: [String],
@@ -105,9 +106,12 @@ mongoose.connection.on('open', function() {
         assert.ifError(err);
 
         /**
-         * Populate the populated documents
+         * Populate the populated documents  populate：填充
          */
+        // 第一次智能查询到author
+        console.log(docs);
 
+        /// 再次查询，找出本人的朋友，并且输出名字，值要两个
         var opts = {
           path: 'author.friends',
           select: 'name',
