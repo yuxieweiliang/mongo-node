@@ -18,8 +18,6 @@ var TestSchema= db.model("someOne", tschema);
 
 // 创建数据，因为上面的函数查询到是28所以这里添加的查不到，而且这里如果年龄变了，哪里也查不到。
 
-
-
 const childChildSchema = new mongoose.Schema({
   PlayerID: Number,
   Msg: String,

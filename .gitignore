@@ -9,12 +9,12 @@ build
 # misc
 .DS_Store
 *.log
+.idea/
 
 use
 other
 dist
 mong
 bower_components
-.idea
 *.docx
 app/
