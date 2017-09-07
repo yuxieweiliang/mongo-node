@@ -86,7 +86,7 @@ function createData() {
           released: 'November 17, 2005',
           consoles: [xbox360]
         },
-        function(err) {
+        function(err, legend, mario, perfect) {
           if (err) return done(err);
           example();
         }
