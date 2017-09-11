@@ -5,6 +5,8 @@ var RoleSchema = new Schema({
   name: String,
   // 年龄
   age: Number,
+  // 头像
+  img: String,
   // 种族
   race: String,
   // 性别
