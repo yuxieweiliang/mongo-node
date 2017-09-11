@@ -1,4 +1,5 @@
-var user = new Schema({
+import mongoose, { Schema } from 'mongoose';
+var UserSchema = new Schema({
   id: {user: Schema.Types.ObjectId, ref: 'user'},
   dates: {created: Date},
   account: {
@@ -7,6 +8,10 @@ var user = new Schema({
   },
   // 位置
   location: String,
+  // 包含
+  introduce: String,
+  // 电话
+  phone: String,
   // 锁定
   locked: Boolean,
   // 名字
@@ -34,4 +39,7 @@ var user = new Schema({
   website: String
 });
 
+
+
+export const User = mongoose.model('User', UserSchema);
 
