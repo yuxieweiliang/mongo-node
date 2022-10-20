@@ -8,7 +8,7 @@
     "express": "^4.15.3",
     "jQuery": "^1.7.4",
     "moment": "^2.18.1",
-    "mongoose": "^4.11.0",
+    "mongoose": "^4.13.21",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
